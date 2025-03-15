@@ -7,9 +7,9 @@ import com.example.grocerymanagement.domain.repository.RegisterRepository
 
 class RegisterViewModel : ViewModel() {
     private val repository = RegisterRepository()
-    val registerStatus: LiveData<Boolean> = repository.registerStatus
+    val registerStatus: LiveData<Pair<Boolean, String>> = repository.registerStatus
 
-     fun registerUser(user: CreateUserReq) {
+    fun registerUser(user: CreateUserReq) {
         repository.registerUser(user)
     }
 }

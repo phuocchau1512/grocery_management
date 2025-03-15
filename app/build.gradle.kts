@@ -55,6 +55,7 @@ dependencies {
     implementation(libs.converter.gson)
     implementation(libs.androidx.fragment.ktx)  // Để dùng viewModels()
     implementation(libs.kotlinx.serialization.json.v151)
+    implementation(libs.androidx.datastore.preferences)
 
 
 

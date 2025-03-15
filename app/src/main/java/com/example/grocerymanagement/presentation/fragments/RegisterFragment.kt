@@ -38,33 +38,53 @@ class RegisterFragment : Fragment() {
         }
 
         binding.signUpBtn.setOnClickListener {
-            val fullName = binding.fullName.text.toString()
-            val email = binding.mobileNumber.text.toString()
-            val password = binding.password.text.toString()
-            val confirmPassword = binding.secondPassword.text.toString()
+            val fullName = binding.fullName.text.toString().trim()
+            val email = binding.mobileNumber.text.toString().trim()
+            val password = binding.password.text.toString().trim()
+            val confirmPassword = binding.secondPassword.text.toString().trim()
 
             if (fullName.isEmpty() || email.isEmpty() || password.isEmpty()) {
-                Toast.makeText(requireContext(), "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show()
+                showToast("Vui lòng nhập đầy đủ thông tin")
                 return@setOnClickListener
             }
 
-            if (password == confirmPassword) {
-                binding.progressBar.visibility = View.VISIBLE
-                registerViewModel.registerUser(CreateUserReq(fullName, email, password))
-            } else {
-                Toast.makeText(requireContext(), "Mật khẩu không khớp!", Toast.LENGTH_SHORT).show()
+            if (!isValidEmail(email)) {
+                showToast("Email không hợp lệ!")
+                return@setOnClickListener
             }
+
+            if (password.length < 6) {
+                showToast("Mật khẩu phải có ít nhất 6 ký tự!")
+                return@setOnClickListener
+            }
+
+            if (password != confirmPassword) {
+                showToast("Mật khẩu không khớp!")
+                return@setOnClickListener
+            }
+
+            binding.progressBar.visibility = View.VISIBLE
+            registerViewModel.registerUser(CreateUserReq(fullName, email, password))
         }
 
-        registerViewModel.registerStatus.observe(viewLifecycleOwner, Observer { success ->
+        registerViewModel.registerStatus.observe(viewLifecycleOwner, Observer { (success, message) ->
+            binding.progressBar.visibility = View.INVISIBLE
+            showToast(message)
+
             if (success) {
-                binding.progressBar.visibility = View.INVISIBLE
-                Toast.makeText(requireContext(), "Đăng ký thành công!", Toast.LENGTH_SHORT).show()
-            } else {
-                binding.progressBar.visibility = View.INVISIBLE
-                Toast.makeText(requireContext(), "Lỗi đăng ký", Toast.LENGTH_SHORT).show()
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(R.id.frameContainer, LoginFragment())
+                    .commit()
             }
         })
+    }
+
+    private fun isValidEmail(email: String): Boolean {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
     override fun onDestroyView() {
@@ -72,3 +92,4 @@ class RegisterFragment : Fragment() {
         _binding = null
     }
 }
+
