@@ -15,6 +15,6 @@ interface AuthApi {
     fun signUp(@Body request: CreateUserReq): Call<ResponseBody>
 
     @Headers("Content-Type: application/json")
-    @POST("users/login.php") // Đường dẫn API PHP của bạn
+    @POST("users/signin.php") // Đường dẫn API PHP của bạn
     fun login(@Body request: LoginRequest): Call<ResponseBody>
 }

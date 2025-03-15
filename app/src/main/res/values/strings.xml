@@ -62,4 +62,6 @@
     <string name="selection_count_title">%3$s (%1$d/%2$d)</string>
     <string name="selection_count">%1$d/%2$d</string>
     <string name="permission_not_given">Permission not given</string>
+    <string name="logout">LogOut</string>
+    <string name="ng_xu_t">Đăng xuất</string>
 </resources>
