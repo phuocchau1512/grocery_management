@@ -26,7 +26,6 @@ class RegisterRepository {
                     val success = jsonObject.getBoolean("success")
                     val message = jsonObject.getString("message")
 
-
                     _registerStatus.postValue(Pair(success, message)) // Truyền thông báo lỗi về UI
 
                 } catch (e: Exception) {
