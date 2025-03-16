@@ -57,7 +57,7 @@ class RegisterFragment : Fragment() {
         }
 
         registerViewModel.registerStatus.observe(viewLifecycleOwner, Observer { success ->
-            if (success) {
+            if (success.first) {
                 binding.progressBar.visibility = View.INVISIBLE
                 Toast.makeText(requireContext(), "Đăng ký thành công!", Toast.LENGTH_SHORT).show()
             } else {
