@@ -56,9 +56,10 @@ class HomeFragment : Fragment() {
         })
 
         val menuItems = listOf(
-            MenuItem("Goods", R.drawable.ic_menu_camera),
-            MenuItem("Questions", R.drawable.ic_listed_items),
-            MenuItem("Questions", R.drawable.ic_listed_items)
+            MenuItem("Quản lý kho", R.drawable.baseline_inventory_24),
+            MenuItem("Danh sách mua sắm", R.drawable.baseline_checklist_24),
+            MenuItem("Quản lý công thức", R.drawable.baseline_book_24),
+            MenuItem("Danh sách công thức", R.drawable.baseline_menu_book_24)
         )
 
         val adapter = MenuAdapter(menuItems) { item ->

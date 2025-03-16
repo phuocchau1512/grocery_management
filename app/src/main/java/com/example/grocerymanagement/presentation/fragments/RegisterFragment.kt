@@ -35,6 +35,8 @@ class RegisterFragment : Fragment() {
             requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.frameContainer, LoginFragment())
                 .commit()
+
+            requireActivity().supportFragmentManager.popBackStack() // Xóa RegisterFragment khỏi BackStack
         }
 
         binding.signUpBtn.setOnClickListener {
@@ -56,15 +58,20 @@ class RegisterFragment : Fragment() {
             }
         }
 
-        registerViewModel.registerStatus.observe(viewLifecycleOwner, Observer { success ->
-            if (success) {
-                binding.progressBar.visibility = View.INVISIBLE
+        registerViewModel.registerStatus.observe(viewLifecycleOwner) { success ->
+            binding.progressBar.visibility = View.INVISIBLE
+            if (success.first) {
                 Toast.makeText(requireContext(), "Đăng ký thành công!", Toast.LENGTH_SHORT).show()
+
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(R.id.frameContainer, LoginFragment()) // Chuyển sang LoginFragment
+                    .commit()
+
+                requireActivity().supportFragmentManager.popBackStack() // Xóa RegisterFragment khỏi BackStack
             } else {
-                binding.progressBar.visibility = View.INVISIBLE
                 Toast.makeText(requireContext(), "Lỗi đăng ký", Toast.LENGTH_SHORT).show()
             }
-        })
+        }
     }
 
     override fun onDestroyView() {
