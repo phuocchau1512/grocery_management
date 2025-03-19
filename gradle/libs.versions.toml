@@ -1,5 +1,10 @@
 [versions]
 agp = "8.6.0"
+barcodeScanning = "17.2.0"
+cameraCamera2 = "1.1.0"
+cameraCore = "1.1.0"
+cameraLifecycle = "1.1.0"
+cameraView = "1.1.0"
 datastorePreferences = "1.0.0"
 fragmentKtx = "1.8.6"
 hiltAndroid = "2.40.5"
@@ -20,10 +25,15 @@ constraintlayout = "2.1.4"
 retrofit = "2.9.0"
 
 [libraries]
+androidx-camera-core = { module = "androidx.camera:camera-core", version.ref = "cameraCore" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
 androidx-fragment-ktx = { module = "androidx.fragment:fragment-ktx", version.ref = "fragmentKtx" }
 androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodelKtx" }
+barcode-scanning = { module = "com.google.mlkit:barcode-scanning", version.ref = "barcodeScanning" }
+camera-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "cameraCamera2" }
+camera-lifecycle = { module = "androidx.camera:camera-lifecycle", version.ref = "cameraLifecycle" }
+camera-view = { module = "androidx.camera:camera-view", version.ref = "cameraView" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroidCompiler" }

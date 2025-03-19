@@ -1,17 +1,18 @@
 package com.example.grocerymanagement.presentation.fragments
 
+import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.grocerymanagement.R
 import com.example.grocerymanagement.databinding.FragmentHomeBinding
 import com.example.grocerymanagement.domain.model.MenuItem
+import com.example.grocerymanagement.presentation.activity.InventoryActivity
 import com.example.grocerymanagement.presentation.adapter.MenuAdapter
 
 
@@ -62,9 +63,27 @@ class HomeFragment : Fragment() {
             MenuItem("Danh sách công thức", R.drawable.baseline_menu_book_24)
         )
 
+// Xử lý khi click vào item
         val adapter = MenuAdapter(menuItems) { item ->
-            Toast.makeText(requireContext(), "Clicked: ${item.title}", Toast.LENGTH_SHORT).show()
+            when (item.title) {
+                "Quản lý kho" -> {
+                    val intent = Intent(requireContext(), InventoryActivity::class.java)
+                    startActivity(intent)
+                }
+                "Danh sách mua sắm" -> {
+
+                }
+                "Quản lý công thức" -> {
+
+                }
+                "Danh sách công thức" -> {
+
+                }
+                else -> {
+                }
+            }
         }
+
 
         binding.recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
         binding.recyclerView.adapter = adapter

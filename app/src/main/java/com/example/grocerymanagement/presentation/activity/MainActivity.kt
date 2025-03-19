@@ -1,13 +1,15 @@
-package com.example.grocerymanagement
+package com.example.grocerymanagement.presentation.activity
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.example.grocerymanagement.R
 import com.example.grocerymanagement.databinding.ActivityMainBinding
 import com.example.grocerymanagement.presentation.fragments.HomeFragment
-import com.example.grocerymanagement.presentation.fragments.LoginFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -35,7 +37,7 @@ class MainActivity : AppCompatActivity() {
             .commit()
     }
 
-    private fun settingNavigationView(){
+    private fun settingNavigationView() {
         // Thiết lập Toolbar
         setSupportActionBar(binding.appBarMain.toolbar)
 
@@ -51,24 +53,26 @@ class MainActivity : AppCompatActivity() {
         binding.navView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.nav_home -> showToast("Trang chủ")
-                R.id.nav_logout -> clearUserData()
+                R.id.nav_logout -> clearUserData() // Không cần truyền context
             }
             binding.drawerLayout.closeDrawers() // Đóng menu sau khi chọn
             true
         }
-
     }
 
-    private fun showToast(s: String) {
-
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
-    private  fun clearUserData() {
+    private fun clearUserData() {
         val sharedPref = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
         with(sharedPref.edit()) {
             clear()
             apply()
         }
-    }
 
+        val intent = Intent(this, LoginRegisterActivity::class.java)
+        startActivity(intent)
+        finish() // Đóng activity hiện tại
+    }
 }

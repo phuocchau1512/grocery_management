@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import com.example.grocerymanagement.MainActivity
+import com.example.grocerymanagement.presentation.activity.MainActivity
 import com.example.grocerymanagement.R
 import com.example.grocerymanagement.data.model.LoginRequest
 import com.example.grocerymanagement.databinding.FragmentLoginBinding
