@@ -57,7 +57,11 @@ dependencies {
     implementation(libs.kotlinx.serialization.json.v151)
     implementation(libs.androidx.datastore.preferences)
 
-
+    implementation(libs.barcode.scanning)
+    implementation(libs.androidx.camera.core)
+    implementation(libs.camera.camera2)
+    implementation(libs.camera.lifecycle)
+    implementation(libs.camera.view)
 
 
 }

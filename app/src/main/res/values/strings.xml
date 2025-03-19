@@ -30,38 +30,8 @@
     <string name="signUp">Đăng ký</string>
     <string name="already_user">Already have Account? Login here.</string>
     <string name="registered_emailid">Please enter your Registered Email Id below:</string>
-    <string name="submit">SUBMIT</string>
-    <string name="back">BACK</string>
-    <string name="action_Cart">Cart</string>
-    <string name="registered_mobile_number">Please Enter Register Mobile Number</string>
-    <string name="reset_code">Reset Code</string>
-    <string name="reset_password">Reset Password</string>
-    <string name="resend_code">Resend Code</string>
-    <string name="order_item_details">Your Order Details</string>
-    <string name="internal_storage">Internal Storage</string>
-    <string name="cancel">Cancel</string>
-    <string name="choose_from_gallery">Choose From Gallery</string>
-    <string name="take_photo">Take Photo</string>
-    <string name="choose_profile_image">Upload Prescription</string>
-
-    <string name="launch_file_picker">Launch File Picker</string>
-
-    <string name="uri">Uri : %1$s</string>
-    <string name="size">Size :  %1$d</string>
-    <string name="mime">Mime: %1$s</string>
-    <string name="type">Type : %1$d</string>
-    <string name="name">Name : %1$s</string>
-    <string name="bucketname">BucketName : %1$s</string>
-    <string name="launch_audio_picker">Launch audio picker</string>
-    <string name="launch_video_picker">Launch video picker</string>
-    <string name="launch_image_picker">Launch image picker</string>
-
-    <string name="file_thumbnail">File Thumbnail</string>
-    <string name="open_camera">Open Camera</string>
-    <string name="done">Done</string>
-    <string name="selection_count_title">%3$s (%1$d/%2$d)</string>
-    <string name="selection_count">%1$d/%2$d</string>
-    <string name="permission_not_given">Permission not given</string>
-    <string name="logout">LogOut</string>
     <string name="ng_xu_t">Đăng xuất</string>
+    <string name="qu_t_m_qr">Quét mã QR</string>
+    <string name="logout">Đăng xuất</string>
+
 </resources>

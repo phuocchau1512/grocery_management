@@ -63,7 +63,6 @@
                         android:padding="8dp"
                         android:gravity="bottom"
                         android:hint="@string/fullName"
-                        android:inputType="textCapWords"
                         android:singleLine="true"
                         android:textColor="@color/text_color"
                         android:textColorHint="@color/colorPrimary"
