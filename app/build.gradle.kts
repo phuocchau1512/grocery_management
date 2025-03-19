@@ -62,6 +62,8 @@ dependencies {
     implementation(libs.camera.camera2)
     implementation(libs.camera.lifecycle)
     implementation(libs.camera.view)
+    implementation(libs.zxing.android.embedded)
+
 
 
 }
