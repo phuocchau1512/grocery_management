@@ -33,5 +33,18 @@
     <string name="ng_xu_t">Đăng xuất</string>
     <string name="qu_t_m_qr">Quét mã QR</string>
     <string name="logout">Đăng xuất</string>
+    <string name="login_screen">Màn hình đăng nhập</string>
+    <string name="thongTinSanPham">Nhập thông tin sản phẩm</string>
+    <string name="project_name">Tên sản phẩm</string>
+    <string name="MoTaSp">Mô tả sản phẩm</string>
+    <string name="hint_product_name">Nhập tên sản phẩm</string>
+    <string name="barcode">Mã vạch</string>
+    <string name="enter_barcode">Nhập mã vạch</string>
+    <string name="enter_des">Nhập mô tả sản phẩm</string>
+    <string name="soLuongText">Số lượng :</string>
+    <string name="increase_nums">increase nums</string>
+    <string name="decrease_nums">decrease nums</string>
+    <string name="_1">1</string>
+    <string name="l_u">Lưu</string>
 
 </resources>

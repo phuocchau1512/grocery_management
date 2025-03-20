@@ -14,7 +14,7 @@
             android:id="@+id/frameContainer"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            />
+            android:contentDescription="@string/login_screen"/>
     </RelativeLayout>
 
 </ScrollView>

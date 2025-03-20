@@ -53,7 +53,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_marginTop="10dp"
-                    android:gravity="bottom">
+                    android:gravity="bottom"
+                    android:maxWidth="320dp">
 
                     <EditText
                         android:id="@+id/login_email"
@@ -69,7 +70,7 @@
                         android:textColor="@color/black"
                         android:textColorHint="@color/colorPrimary"
                         android:textSize="16sp"
-                        android:padding="8dp"/>
+                        android:padding="8dp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <View
@@ -82,7 +83,8 @@
                     android:layout_height="60dp"
                     android:layout_marginTop="20dp"
                     android:gravity="bottom"
-                    app:passwordToggleEnabled="true">
+                    app:passwordToggleEnabled="true"
+                    android:maxWidth="320dp">
 
                     <EditText
                         android:id="@+id/login_password"
@@ -98,7 +100,7 @@
                         android:textColor="@color/black"
                         android:textColorHint="@color/colorPrimary"
                         android:textSize="16sp"
-                        android:padding="8dp"/>
+                        android:padding="8dp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <View
@@ -116,7 +118,8 @@
                     android:text="@string/login"
                     android:textColor="@color/white"
                     android:textSize="17sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:maxWidth="300dp"/>
             </LinearLayout>
 
             <TextView
