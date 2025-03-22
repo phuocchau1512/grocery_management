@@ -1,5 +1,7 @@
 [versions]
+activityVersion = "1.7.2"
 agp = "8.6.0"
+appcompatVersion = "1.6.1"
 barcodeScanning = "17.2.0"
 cameraCamera2 = "1.1.0"
 cameraCore = "1.1.0"
@@ -10,6 +12,7 @@ datastorePreferences = "1.0.0"
 fragmentKtx = "1.8.6"
 hiltAndroid = "2.40.5"
 hiltAndroidCompiler = "2.50"
+imagepicker = "2.3.22"
 kotlin = "1.9.0"
 coreKtx = "1.13.1"
 junit = "4.13.2"
@@ -25,8 +28,11 @@ activity = "1.9.2"
 constraintlayout = "2.1.4"
 retrofit = "2.9.0"
 zxingAndroidEmbedded = "4.3.0"
+volley = "1.2.1"
 
 [libraries]
+androidx-activity-v172 = { module = "androidx.activity:activity", version.ref = "activityVersion" }
+androidx-appcompat-v161 = { module = "androidx.appcompat:appcompat", version.ref = "appcompatVersion" }
 androidx-camera-core = { module = "androidx.camera:camera-core", version.ref = "cameraCore" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
@@ -41,6 +47,7 @@ core = { module = "com.google.zxing:core", version.ref = "core" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroidCompiler" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hiltAndroid" }
+imagepicker = { module = "com.github.Drjacky:ImagePicker", version.ref = "imagepicker" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -53,6 +60,7 @@ androidx-activity = { group = "androidx.activity", name = "activity", version.re
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 zxing-android-embedded = { module = "com.journeyapps:zxing-android-embedded", version.ref = "zxingAndroidEmbedded" }
+volley = { group = "com.android.volley", name = "volley", version.ref = "volley" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

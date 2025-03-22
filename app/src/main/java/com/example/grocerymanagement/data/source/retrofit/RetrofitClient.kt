@@ -1,11 +1,12 @@
 package com.example.grocerymanagement.data.source.retrofit
 
 import com.example.grocerymanagement.data.source.api.AuthApi
+import com.example.grocerymanagement.data.source.api.ProductApi
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient {
-    private const val BASE_URL = "http://192.168.1.26/api_grocery/" // Thay URL backend
+    private const val BASE_URL = "http://192.168.1.29/api_grocery/" // Thay URL backend
 
     val instance: AuthApi by lazy {
         Retrofit.Builder()
@@ -13,5 +14,13 @@ object RetrofitClient {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(AuthApi::class.java)
+    }
+
+    val productApi: ProductApi by lazy {
+        Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(ProductApi::class.java)
     }
 }

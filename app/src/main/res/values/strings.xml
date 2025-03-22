@@ -46,5 +46,7 @@
     <string name="decrease_nums">decrease nums</string>
     <string name="_1">1</string>
     <string name="l_u">Lưu</string>
+    <string name="img_picker">Chọn ảnh sản phẩm</string>
+    <string name="image_project">hình ảnh sản phẩm</string>
 
 </resources>

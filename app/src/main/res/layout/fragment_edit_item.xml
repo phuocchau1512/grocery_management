@@ -125,20 +125,23 @@
                 android:gravity="start"
                 android:layout_marginEnd="8dp"/>
 
-            <!-- Đẩy số lượng sang bên phải -->
-            <TextView
-                android:id="@+id/tvQuantity"
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/_1"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="@color/black"
-                android:padding="12dp"
-                android:layout_weight="1"
-                android:gravity="start"/>
+                android:layout_weight="1">
 
-            <!-- Nhóm 2 nút bên phải -->
+                <EditText
+                    android:id="@+id/etSoLuong"
+                    android:layout_width="60dp"
+                    android:layout_height="48dp"
+                    android:text="@string/_1"
+                    android:inputType="number"
+                    android:textSize="18sp"
+                    tools:ignore="Autofill" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -170,9 +173,40 @@
 
         </LinearLayout>
 
+        <Button
+            android:id="@+id/btnPickImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:text="@string/img_picker"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:background="@drawable/login_button_selector"
+            android:layout_marginTop="20dp"/>
+
+        <ImageView
+            android:id="@+id/imgProduct"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:contentDescription="@string/image_project"
+            android:scaleType="centerCrop"
+            android:src="@drawable/baseline_image_24"
+            android:background="@drawable/image_border"
+            android:layout_marginTop="8dp"/>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            style="@android:style/Widget.Material.ProgressBar.Large"/>
+
         <!-- Nút Lưu -->
         <Button
-            android:id="@+id/loginBtn"
+            android:id="@+id/saveBtn"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -184,4 +218,6 @@
             android:textStyle="bold"
             android:maxWidth="300dp"/>
     </LinearLayout>
+
+
 </ScrollView>
