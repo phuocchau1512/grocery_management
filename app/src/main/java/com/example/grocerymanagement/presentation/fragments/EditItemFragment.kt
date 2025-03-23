@@ -94,6 +94,7 @@ class EditItemFragment : Fragment() {
             turnOnSaveBtn()
             if (isSuccess) {
                 Toast.makeText(requireContext(), "Lưu thành công!", Toast.LENGTH_SHORT).show()
+                parentFragmentManager.popBackStack()
             } else {
                 Toast.makeText(requireContext(), "Lưu thất bại!", Toast.LENGTH_SHORT).show()
             }

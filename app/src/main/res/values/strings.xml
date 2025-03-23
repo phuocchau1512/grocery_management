@@ -8,8 +8,6 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
     <string name="otp_verification">OTP Verification</string>
-    <string name="otp_verification_text">Please verify your email using OTP send to your register email</string>
-    <string name="verify_otp">Verify OTP</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
@@ -26,10 +24,8 @@
     <string name="Email">Nhập Email của bạn</string>
     <string name="location">Location</string>
     <string name="confirmPassword">Confirm Password</string>
-    <string name="terms_conditions">By clicking SignUp you agree all the Terms and Conditions.</string>
     <string name="signUp">Đăng ký</string>
-    <string name="already_user">Already have Account? Login here.</string>
-    <string name="registered_emailid">Please enter your Registered Email Id below:</string>
+    <string name="already_user">Đã có tài khoản. Đăng nhập.</string>
     <string name="ng_xu_t">Đăng xuất</string>
     <string name="qu_t_m_qr">Quét mã QR</string>
     <string name="logout">Đăng xuất</string>
