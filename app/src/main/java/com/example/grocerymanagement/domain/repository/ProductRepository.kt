@@ -4,17 +4,22 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.grocerymanagement.data.model.Product
 import com.example.grocerymanagement.data.source.retrofit.RetrofitClient
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
 
 class ProductRepository(private val context: Context) {
+
+    private val _products = MutableLiveData<List<Product>>()
+    val products: LiveData<List<Product>> get() = _products
 
     private val _saveStatus = MutableLiveData<Boolean>()
     val saveStatus: LiveData<Boolean> get() = _saveStatus
@@ -50,6 +55,47 @@ class ProductRepository(private val context: Context) {
                 }
             })
     }
+
+    fun getProducts() {
+
+        val sharedPref = context.getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
+        val userId = sharedPref.getString("userID", "") ?: ""
+
+        RetrofitClient.productApi.getListProductInvent(userId).enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                if (response.isSuccessful) {
+                    response.body()?.let {
+                        val json = it.string()
+                        val jsonObject = JSONObject(json)
+                        if (jsonObject.getBoolean("success")) {
+                            val productArray = jsonObject.getJSONArray("products")
+                            val productList = mutableListOf<Product>()
+                            for (i in 0 until productArray.length()) {
+                                val item = productArray.getJSONObject(i)
+                                val product = Product(
+                                    id = item.getInt("id"),
+                                    name = item.getString("name"),
+                                    barcode = item.getString("barcode"),
+                                    img = item.getString("img"),
+                                    description = item.getString("description"),
+                                    quantity = item.getInt("quantity")
+                                )
+                                productList.add(product)
+                            }
+                            _products.postValue(productList) // Cập nhật danh sách sản phẩm
+                        }
+                    }
+                } else {
+                    Log.e("API_ERROR", "Response Error: ${response.errorBody()?.string()}")
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                Log.e("API_ERROR", "Error fetching products: ${t.message}")
+            }
+        })
+    }
+
 
 
 

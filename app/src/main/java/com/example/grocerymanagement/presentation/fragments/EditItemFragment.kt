@@ -96,7 +96,7 @@ class EditItemFragment : Fragment() {
                 Toast.makeText(requireContext(), "Lưu thành công!", Toast.LENGTH_SHORT).show()
                 parentFragmentManager.popBackStack()
             } else {
-                Toast.makeText(requireContext(), "Lưu thất bại!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Lưu thất bại!, vui lòng thử lại", Toast.LENGTH_SHORT).show()
             }
         }
 
