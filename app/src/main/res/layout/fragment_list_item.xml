@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tvEmpty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/khong_co_sp_trong_kho"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:visibility="gone" /> <!-- Ẩn ban đầu -->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -10,4 +19,4 @@
         android:padding="16dp"
         android:background="@color/white" />
 
-</RelativeLayout>
+</LinearLayout>

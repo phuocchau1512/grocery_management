@@ -13,7 +13,7 @@ class InventoryViewModel(application: Application) : AndroidViewModel(applicatio
     private val repository = ProductRepository(application.applicationContext)
     val product: LiveData<List<Product>> = repository.products
 
-    fun addProductToInvent() {
+    fun getProductInInvent() {
         repository.getProducts()
     }
 

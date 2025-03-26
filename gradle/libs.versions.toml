@@ -10,6 +10,7 @@ cameraView = "1.1.0"
 core = "3.2.0"
 datastorePreferences = "1.0.0"
 fragmentKtx = "1.8.6"
+glide = "4.16.0"
 hiltAndroid = "2.40.5"
 hiltAndroidCompiler = "2.50"
 imagepicker = "2.3.22"
@@ -44,6 +45,7 @@ camera-lifecycle = { module = "androidx.camera:camera-lifecycle", version.ref = 
 camera-view = { module = "androidx.camera:camera-view", version.ref = "cameraView" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
 core = { module = "com.google.zxing:core", version.ref = "core" }
+glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroidCompiler" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hiltAndroid" }

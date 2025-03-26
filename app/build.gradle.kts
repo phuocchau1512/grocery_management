@@ -66,6 +66,7 @@ dependencies {
     implementation(libs.zxing.android.embedded)
     implementation(libs.androidx.activity.v172)
     implementation(libs.androidx.appcompat.v161)
+    implementation(libs.glide)
 
 
 
