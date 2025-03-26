@@ -44,5 +44,10 @@
     <string name="l_u">Lưu</string>
     <string name="img_picker">Chọn ảnh sản phẩm</string>
     <string name="image_project">hình ảnh sản phẩm</string>
+    <string name="product_name">Product Name</string>
+    <string name="hinh_anh_san_pham">hinh anh san pham</string>
+    <string name="gia_tien">Giá tiền:</string>
+    <string name="_15">15</string>
+    <string name="tien">$tien</string>
 
 </resources>
