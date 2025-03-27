@@ -27,5 +27,10 @@ interface ProductApi {
         @Query("user_id") userId: String
     ): Call<ResponseBody>
 
+    @GET("products/get_info_products.php")
+    fun getInfoProducts(
+        @Query("barcode") barcode: String
+    ): Call<ResponseBody>
+
 
 }
