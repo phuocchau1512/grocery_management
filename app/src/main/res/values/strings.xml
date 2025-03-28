@@ -50,5 +50,6 @@
     <string name="_15">15</string>
     <string name="tien">$tien</string>
     <string name="khong_co_sp_trong_kho">Không có sản phẩm nào trong kho</string>
+    <string name="so_luong">số lượng</string>
 
 </resources>

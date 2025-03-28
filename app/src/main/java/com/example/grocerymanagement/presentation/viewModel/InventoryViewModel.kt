@@ -5,7 +5,6 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.example.grocerymanagement.data.model.Product
 import com.example.grocerymanagement.domain.repository.ProductRepository
-import java.io.File
 
 
 class InventoryViewModel(application: Application) : AndroidViewModel(application) {
@@ -16,5 +15,10 @@ class InventoryViewModel(application: Application) : AndroidViewModel(applicatio
     fun getProductInInvent() {
         repository.getProducts()
     }
+
+    fun deleteProductInInvent(productId:String){
+        repository.deleteProductFromInventory(productId)
+    }
+
 
 }

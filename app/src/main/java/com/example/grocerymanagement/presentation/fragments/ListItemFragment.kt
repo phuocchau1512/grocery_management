@@ -1,28 +1,23 @@
 package com.example.grocerymanagement.presentation.fragments
 
-import android.content.Intent
-import android.graphics.Rect
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.grocerymanagement.R
-import com.example.grocerymanagement.databinding.FragmentEditItemBinding
+import com.example.grocerymanagement.data.model.Product
 import com.example.grocerymanagement.databinding.FragmentListItemBinding
-import com.example.grocerymanagement.domain.model.MenuItem
-import com.example.grocerymanagement.presentation.activity.InventoryActivity
-import com.example.grocerymanagement.presentation.adapter.MenuAdapter
+import com.example.grocerymanagement.presentation.adapter.OnItemClickListener
 import com.example.grocerymanagement.presentation.adapter.ProductAdapter
-import com.example.grocerymanagement.presentation.viewModel.EditProductViewModel
 import com.example.grocerymanagement.presentation.viewModel.InventoryViewModel
 
 
-class ListItemFragment : Fragment() {
+class ListItemFragment : Fragment(), OnItemClickListener {
 
     private var _binding: FragmentListItemBinding? = null
     private val binding get() = _binding!!
@@ -42,7 +37,9 @@ class ListItemFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this)[InventoryViewModel::class.java]
         // Khởi tạo Adapter
-        adapter = ProductAdapter(emptyList())
+        adapter = ProductAdapter(emptyList(),this)
+
+        settingSwipeDelete()
 
         // Cấu hình RecyclerView
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -50,6 +47,7 @@ class ListItemFragment : Fragment() {
 
         // Quan sát dữ liệu từ ViewModel
         viewModel.product.observe(viewLifecycleOwner) { productList ->
+            binding.progressBar.visibility = View.GONE
             if ( productList.isNullOrEmpty() ){
                 binding.recyclerView.visibility = View.GONE
                 binding.tvEmpty.visibility = View.VISIBLE
@@ -65,11 +63,48 @@ class ListItemFragment : Fragment() {
         viewModel.getProductInInvent()
     }
 
+    private fun settingSwipeDelete(){
+
+        val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.adapterPosition
+                val productToDelete = adapter.getProductAt(position) // Lấy sản phẩm cần xóa
+
+                AlertDialog.Builder(requireContext())
+                    .setTitle("Xác nhận xóa")
+                    .setMessage("Bạn có chắc muốn xóa sản phẩm này?")
+                    .setPositiveButton("Xóa") { _, _ ->
+                        viewModel.deleteProductInInvent(productToDelete.id.toString()) // Gọi API xóa
+                    }
+                    .setNegativeButton("Hủy") { dialog, _ ->
+                        dialog.dismiss()
+                        adapter.notifyItemChanged(position) // Khôi phục item nếu hủy
+                    }
+                    .show()
+
+            }
+        })
+
+        // Gắn vào RecyclerView
+        itemTouchHelper.attachToRecyclerView(binding.recyclerView)
+
+    }
+
 
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+
+
+    override fun onItemClick(product: Product) {
+        TODO("Not yet implemented")
     }
 
 

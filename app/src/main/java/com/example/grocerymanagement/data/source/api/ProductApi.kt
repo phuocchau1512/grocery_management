@@ -4,6 +4,8 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Call
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.Multipart
 import retrofit2.http.POST
@@ -30,6 +32,13 @@ interface ProductApi {
     @GET("products/get_info_products.php")
     fun getInfoProducts(
         @Query("barcode") barcode: String
+    ): Call<ResponseBody>
+
+    @FormUrlEncoded
+    @POST("products/delete_item_inventory.php")
+    fun deleteItemInventory(
+        @Field("user_id") userId: String,
+        @Field("product_id") productId: String
     ): Call<ResponseBody>
 
 

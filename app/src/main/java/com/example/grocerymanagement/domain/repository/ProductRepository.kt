@@ -96,6 +96,27 @@ class ProductRepository(private val context: Context) {
         })
     }
 
+    fun deleteProductFromInventory(productId: String){
+        val sharedPref = context.getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
+        val userId = sharedPref.getString("userID", "") ?: ""
+
+        RetrofitClient.productApi.deleteItemInventory(userId,productId).enqueue(object : Callback<ResponseBody>{
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                if (response.isSuccessful) {
+                    Log.d("DELETE", "Xóa thành công")
+                } else {
+                    Log.e("DELETE", "Xóa thất bại")
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                Log.e("DELETE", "Lỗi: ${t.message}")
+            }
+
+        })
+
+    }
+
 
 
 

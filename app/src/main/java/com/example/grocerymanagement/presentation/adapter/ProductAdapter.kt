@@ -10,8 +10,10 @@ import com.example.grocerymanagement.data.model.Product
 import com.example.grocerymanagement.data.source.retrofit.RetrofitClient
 import com.example.grocerymanagement.databinding.ItemProductBinding
 
-class ProductAdapter(private var productList: List<Product>) :
-    RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
+class ProductAdapter(
+    private var productList: List<Product>,
+    private val listener: OnItemClickListener
+) : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
     class ProductViewHolder(val binding: ItemProductBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -28,14 +30,16 @@ class ProductAdapter(private var productList: List<Product>) :
         holder.binding.txtQuantity.text = product.quantity.toString()
 
         Glide.with(holder.itemView.context)
-            .load(RetrofitClient.getBaseUrl()+product.img) // URL ảnh
+            .load(RetrofitClient.getBaseUrl() + product.img) // URL ảnh
             .placeholder(R.drawable.baseline_image_24) // Ảnh hiển thị khi tải
             .error(R.drawable.baseline_image_24) // Ảnh hiển thị khi lỗi
             .into(holder.binding.imgProduct) // Đặt vào ImageView
 
+        // Bắt sự kiện click vào item
+        holder.itemView.setOnClickListener {
+            listener.onItemClick(productList[holder.adapterPosition]) 
+        }
     }
-
-
 
     override fun getItemCount(): Int = productList.size
 
@@ -44,6 +48,17 @@ class ProductAdapter(private var productList: List<Product>) :
         val diffResult = DiffUtil.calculateDiff(diffCallback)
         productList = newList
         diffResult.dispatchUpdatesTo(this)
+    }
+
+    fun removeItem(position: Int) {
+        val mutableList = productList.toMutableList() // Chuyển sang MutableList để có thể xóa
+        mutableList.removeAt(position)
+        productList = mutableList
+        notifyItemRemoved(position)
+    }
+
+    fun getProductAt(position: Int): Product {
+        return productList[position]
     }
 }
 
@@ -57,12 +72,23 @@ class ProductDiffCallback(
     override fun getNewListSize(): Int = newList.size
 
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return oldList[oldItemPosition].id == newList[newItemPosition].id
+        val oldItem = oldList[oldItemPosition]
+        val newItem = newList[newItemPosition]
+
+        return oldItem.name == newItem.name &&
+                oldItem.barcode == newItem.barcode &&
+                oldItem.img == newItem.img &&
+                oldItem.description == newItem.description &&
+                oldItem.quantity == newItem.quantity
     }
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
         return oldList[oldItemPosition] == newList[newItemPosition]
     }
+}
+
+interface OnItemClickListener {
+    fun onItemClick(product: Product)
 }
 
 
