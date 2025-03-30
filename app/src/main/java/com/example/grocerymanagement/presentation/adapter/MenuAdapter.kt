@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.grocerymanagement.databinding.MenuItemBinding
-import com.example.grocerymanagement.domain.model.MenuItem
+import com.example.grocerymanagement.presentation.adapter.adapterItem.MenuItem
 
 class MenuAdapter(private val items: List<MenuItem>, private val onClick: (MenuItem) -> Unit) :
     RecyclerView.Adapter<MenuAdapter.ViewHolder>() {

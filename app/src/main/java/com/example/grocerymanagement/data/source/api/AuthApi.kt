@@ -1,7 +1,7 @@
 package com.example.grocerymanagement.data.source.api
 
-import com.example.grocerymanagement.data.model.CreateUserReq
-import com.example.grocerymanagement.data.model.LoginRequest
+import com.example.grocerymanagement.domain.model.CreateUserReq
+import com.example.grocerymanagement.domain.model.LoginRequest
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.Body

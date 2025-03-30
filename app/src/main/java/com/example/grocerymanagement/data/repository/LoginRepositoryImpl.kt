@@ -1,26 +1,24 @@
-package com.example.grocerymanagement.domain.repository
+package com.example.grocerymanagement.data.repository
 
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.grocerymanagement.data.model.LoginRequest
+import com.example.grocerymanagement.domain.model.LoginRequest
 import com.example.grocerymanagement.data.source.retrofit.RetrofitClient
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import com.example.grocerymanagement.domain.serviceInterface.LoginRepository
+import okhttp3.ResponseBody
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import okhttp3.ResponseBody
 
-class LoginRepository(private val context: Context) {
+class LoginRepositoryImpl(private val context: Context) : LoginRepository {
 
     private val _loginStatus = MutableLiveData<Boolean>()
     val loginStatus: LiveData<Boolean> get() = _loginStatus
 
-    fun loginUser(user: LoginRequest) {
+    override fun loginUser(user: LoginRequest) {
         RetrofitClient.instance.login(user).enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {

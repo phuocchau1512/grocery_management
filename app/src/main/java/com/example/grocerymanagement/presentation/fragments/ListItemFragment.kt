@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.grocerymanagement.data.model.Product
+import com.example.grocerymanagement.domain.model.Product
 import com.example.grocerymanagement.databinding.FragmentListItemBinding
 import com.example.grocerymanagement.presentation.adapter.OnItemClickListener
 import com.example.grocerymanagement.presentation.adapter.ProductAdapter

@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.grocerymanagement.R
-import com.example.grocerymanagement.data.model.Product
+import com.example.grocerymanagement.domain.model.Product
 import com.example.grocerymanagement.data.source.retrofit.RetrofitClient
 import com.example.grocerymanagement.databinding.ItemProductBinding
 

@@ -8,7 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.grocerymanagement.R
-import com.example.grocerymanagement.data.model.CreateUserReq
+import com.example.grocerymanagement.domain.model.CreateUserReq
 import com.example.grocerymanagement.databinding.FragmentRegisterBinding
 import com.example.grocerymanagement.presentation.viewModel.RegisterViewModel
 

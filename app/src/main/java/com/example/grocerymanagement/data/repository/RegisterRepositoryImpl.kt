@@ -1,22 +1,22 @@
-package com.example.grocerymanagement.domain.repository
+package com.example.grocerymanagement.data.repository
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.grocerymanagement.data.model.CreateUserReq
+import com.example.grocerymanagement.domain.model.CreateUserReq
 import com.example.grocerymanagement.data.source.retrofit.RetrofitClient
+import com.example.grocerymanagement.domain.serviceInterface.RegisterRepository
 import okhttp3.ResponseBody
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class RegisterRepository {
+class RegisterRepositoryImpl : RegisterRepository{
 
     private val _registerStatus = MutableLiveData<Pair<Boolean, String>>() // Trả về cả trạng thái & thông báo lỗi
     val registerStatus: LiveData<Pair<Boolean, String>> get() = _registerStatus
 
-    fun registerUser(user: CreateUserReq) {
+    override fun registerUser(user: CreateUserReq) {
         RetrofitClient.instance.signUp(user).enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 try {

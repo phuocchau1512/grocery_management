@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.grocerymanagement.R
 import com.example.grocerymanagement.databinding.FragmentHomeBinding
-import com.example.grocerymanagement.domain.model.MenuItem
+import com.example.grocerymanagement.presentation.adapter.adapterItem.MenuItem
 import com.example.grocerymanagement.presentation.activity.InventoryActivity
 import com.example.grocerymanagement.presentation.adapter.MenuAdapter
 

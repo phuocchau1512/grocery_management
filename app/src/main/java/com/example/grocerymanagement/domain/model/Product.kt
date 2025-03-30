@@ -1,4 +1,4 @@
-package com.example.grocerymanagement.data.model
+package com.example.grocerymanagement.domain.model
 
 data class Product(
     val id: Int,

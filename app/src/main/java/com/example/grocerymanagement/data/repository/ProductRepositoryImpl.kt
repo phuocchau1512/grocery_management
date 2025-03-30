@@ -1,11 +1,12 @@
-package com.example.grocerymanagement.domain.repository
+package com.example.grocerymanagement.data.repository
 
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.grocerymanagement.data.model.Product
+import com.example.grocerymanagement.domain.model.Product
 import com.example.grocerymanagement.data.source.retrofit.RetrofitClient
+import com.example.grocerymanagement.domain.serviceInterface.ProductRepository
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -16,7 +17,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
 
-class ProductRepository(private val context: Context) {
+class ProductRepositoryImpl(private val context: Context): ProductRepository {
 
     private val _products = MutableLiveData<List<Product>>()
     val products: LiveData<List<Product>> get() = _products
@@ -24,7 +25,7 @@ class ProductRepository(private val context: Context) {
     private val _saveStatus = MutableLiveData<Boolean>()
     val saveStatus: LiveData<Boolean> get() = _saveStatus
 
-    fun addProductToInvent(name: String, barcode: String, description: String, quantity: String, imgFile: File) {
+    override fun addProductToInvent(name: String, barcode: String, description: String, quantity: String, imgFile: File) {
         val sharedPref = context.getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
         val userId = sharedPref.getString("userID", "") ?: "" // Lấy user_id từ SharedPreferences
 
@@ -56,7 +57,7 @@ class ProductRepository(private val context: Context) {
             })
     }
 
-    fun getProducts() {
+    override fun getProducts() {
 
         val sharedPref = context.getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
         val userId = sharedPref.getString("userID", "") ?: ""
@@ -96,7 +97,7 @@ class ProductRepository(private val context: Context) {
         })
     }
 
-    fun deleteProductFromInventory(productId: String){
+    override fun deleteProductFromInventory(productId: String){
         val sharedPref = context.getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
         val userId = sharedPref.getString("userID", "") ?: ""
 
