@@ -13,7 +13,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.grocerymanagement.R
 import com.example.grocerymanagement.databinding.ActivityInventoryBinding
-import com.example.grocerymanagement.presentation.fragments.EditItemFragment
+import com.example.grocerymanagement.presentation.fragments.AddItemFragment
 import com.example.grocerymanagement.presentation.fragments.ListItemFragment
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanOptions
@@ -79,10 +79,10 @@ class InventoryActivity : AppCompatActivity() {
             }
             R.id.action_add -> {
                 val currentFragment = supportFragmentManager.findFragmentById(R.id.frameContainer)
-                if (currentFragment is EditItemFragment) {
+                if (currentFragment is AddItemFragment) {
                     Toast.makeText(this, "Bạn đang ở phần thêm sản phẩm!", Toast.LENGTH_SHORT).show()
                 } else {
-                    replaceFragment(EditItemFragment())
+                    replaceFragment(AddItemFragment())
                 }
                 true
             }

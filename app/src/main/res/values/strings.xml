@@ -51,5 +51,8 @@
     <string name="tien">$tien</string>
     <string name="khong_co_sp_trong_kho">Không có sản phẩm nào trong kho</string>
     <string name="so_luong">số lượng</string>
+    <string name="nhap_ghi_chu">Nhập ghi chú cho sản phẩm</string>
+    <string name="note">Ghi chú: %s</string>
+    <string name="edit_product">Chỉnh sửa sản phẩm</string>
 
 </resources>

@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.grocerymanagement.R
 import com.example.grocerymanagement.domain.model.Product
 import com.example.grocerymanagement.databinding.FragmentListItemBinding
 import com.example.grocerymanagement.presentation.adapter.OnItemClickListener
@@ -104,8 +105,20 @@ class ListItemFragment : Fragment(), OnItemClickListener {
 
 
     override fun onItemClick(product: Product) {
-        TODO("Not yet implemented")
+        val editFragment = EditItemFragment().apply {
+            arguments = Bundle().apply {
+                putParcelable("selected_product", product) // Truyền sản phẩm
+            }
+        }
+
+        // Chuyển sang EditItemFragment
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.frameContainer, editFragment)
+            .addToBackStack(null)
+            .commit()
     }
+
+
 
 
 }

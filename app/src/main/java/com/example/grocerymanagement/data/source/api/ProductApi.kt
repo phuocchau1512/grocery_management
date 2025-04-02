@@ -13,6 +13,7 @@ import retrofit2.http.Part
 import retrofit2.http.Query
 
 interface ProductApi {
+
     @Multipart
     @POST("products/save_product.php")
     fun addProductToInvent(
@@ -21,7 +22,31 @@ interface ProductApi {
         @Part("barcode") barcode: RequestBody,
         @Part("description") description: RequestBody,
         @Part("quantity") quantity: RequestBody,
+        @Part("note") note: RequestBody,
         @Part img: MultipartBody.Part
+    ): Call<ResponseBody>
+
+    @Multipart
+    @POST("products/edit_product.php")
+    fun editProductToInvent(
+        @Part("product_id") productId: RequestBody,
+        @Part("name") name: RequestBody,
+        @Part("barcode") barcode: RequestBody,
+        @Part("description") description: RequestBody,
+        @Part("quantity") quantity: RequestBody,
+        @Part("note") note: RequestBody,
+        @Part img: MultipartBody.Part
+    ): Call<ResponseBody>
+
+    @FormUrlEncoded
+    @POST("products/edit_product_without_image.php")
+    fun editProductToInventWithoutImage(
+        @Part("product_id") productId: RequestBody,
+        @Field("name") name: RequestBody,
+        @Field("barcode") barcode: RequestBody,
+        @Field("description") description: RequestBody,
+        @Field("quantity") quantity: RequestBody,
+        @Field("note") note: RequestBody
     ): Call<ResponseBody>
 
     @GET("products/get_list_inventory.php")

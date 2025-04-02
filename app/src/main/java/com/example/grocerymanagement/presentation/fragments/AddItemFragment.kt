@@ -10,25 +10,18 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.bumptech.glide.Glide
-import com.example.grocerymanagement.R
-import com.example.grocerymanagement.data.source.retrofit.RetrofitClient
-import com.example.grocerymanagement.databinding.FragmentEditItemBinding
-import com.example.grocerymanagement.domain.model.Product
+import com.example.grocerymanagement.databinding.FragmentAddItemBinding
 import com.example.grocerymanagement.presentation.viewModel.ProductViewModel
 import java.io.File
 
 
-class EditItemFragment : Fragment() {
+class AddItemFragment : Fragment() {
 
-
-    private var _binding: FragmentEditItemBinding? = null
+    private var _binding: FragmentAddItemBinding? = null
     private val binding get() = _binding!!
     private lateinit var viewModel: ProductViewModel  // Khai báo ViewModel
 
     private var selectedImageUri: Uri? = null
-
-    private var selectedProduct: Product? = null
 
     private val pickImageLauncher =
         registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri: Uri? ->
@@ -42,33 +35,12 @@ class EditItemFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentEditItemBinding.inflate(inflater, container, false)
+        _binding = FragmentAddItemBinding.inflate(inflater, container, false)
         return binding.root
     }
 
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
-        // Lấy sản phẩm từ Bundle
-        selectedProduct = arguments?.getParcelable("selected_product")
-
-        selectedProduct?.let { product ->
-            binding.etProductName.setText(product.name)
-            binding.etBarcode.text = product.barcode
-            binding.etDescription.setText(product.description)
-            binding.etSoLuong.setText(product.quantity.toString())
-            binding.etNote.setText(product.note)
-
-            // Nếu có ảnh, hiển thị ảnh sản phẩm
-            Glide.with(requireContext())
-                .load(RetrofitClient.getBaseUrl() + product.img) // URL ảnh
-                .placeholder(R.drawable.baseline_image_24) // Ảnh hiển thị khi tải
-                .error(R.drawable.baseline_image_24) // Ảnh hiển thị khi lỗi
-                .into(binding.imgProduct)
-        }
 
         // Khởi tạo ViewModel
         viewModel = ViewModelProvider(this)[ProductViewModel::class.java]
@@ -105,14 +77,17 @@ class EditItemFragment : Fragment() {
                 return@setOnClickListener
             }
 
-            var imgFile: File? = null
-            // Chuyển Uri thành File
-            if ( selectedImageUri != null ) {
-                imgFile = uriToFile(selectedImageUri!!)
+
+            if (selectedImageUri == null) {
+                Toast.makeText(requireContext(), "Vui lòng chọn ảnh!", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
             }
 
+            // Chuyển Uri thành File
+            val imgFile = uriToFile(selectedImageUri!!)
+
             turnOffSaveBtn()
-            selectedProduct?.let { it1 -> viewModel.editProductToInvent(it1.id, name, barcode, description, quantityStr,note, imgFile) }
+            viewModel.addProductToInvent(name, barcode, description, quantityStr,note, imgFile)
         }
 
         viewModel.saveStatus.observe(viewLifecycleOwner) { isSuccess ->
@@ -152,6 +127,4 @@ class EditItemFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
-
 }

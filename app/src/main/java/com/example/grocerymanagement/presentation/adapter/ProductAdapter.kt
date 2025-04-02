@@ -26,7 +26,7 @@ class ProductAdapter(
         val product = productList[position]
         holder.binding.txtProductName.text = product.name
         holder.binding.txtBarcode.text = product.barcode
-        holder.binding.txtDescription.text = product.description
+        holder.binding.txtNote.text = holder.itemView.context.getString(R.string.note, product.note)
         holder.binding.txtQuantity.text = product.quantity.toString()
 
         Glide.with(holder.itemView.context)
@@ -79,7 +79,8 @@ class ProductDiffCallback(
                 oldItem.barcode == newItem.barcode &&
                 oldItem.img == newItem.img &&
                 oldItem.description == newItem.description &&
-                oldItem.quantity == newItem.quantity
+                oldItem.quantity == newItem.quantity &&
+                oldItem.note == newItem.note
     }
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
