@@ -29,6 +29,7 @@ interface ProductApi {
     @Multipart
     @POST("products/edit_product.php")
     fun editProductToInvent(
+        @Part("user_id") userId: RequestBody,
         @Part("product_id") productId: RequestBody,
         @Part("name") name: RequestBody,
         @Part("barcode") barcode: RequestBody,
@@ -41,13 +42,24 @@ interface ProductApi {
     @FormUrlEncoded
     @POST("products/edit_product_without_image.php")
     fun editProductToInventWithoutImage(
-        @Part("product_id") productId: RequestBody,
-        @Field("name") name: RequestBody,
-        @Field("barcode") barcode: RequestBody,
-        @Field("description") description: RequestBody,
-        @Field("quantity") quantity: RequestBody,
-        @Field("note") note: RequestBody
+        @Field("user_id") userId: String,
+        @Field("product_id") productId: Int,
+        @Field("name") name: String,
+        @Field("barcode") barcode: String,
+        @Field("description") description: String,
+        @Field("quantity") quantity: String,
+        @Field("note") note: String?
     ): Call<ResponseBody>
+
+    @FormUrlEncoded
+    @POST("products/edit_product_without_image.php")
+    fun editPublicProductToInvent(
+        @Field("user_id") userId: String,
+        @Field("product_id") productId: Int,
+        @Field("quantity") quantity: String,
+        @Field("note") note: String?
+    ): Call<ResponseBody>
+
 
     @GET("products/get_list_inventory.php")
     fun getListProductInvent(

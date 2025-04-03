@@ -80,6 +80,11 @@ class ProductRepositoryImpl(private val context: Context): ProductRepository {
         note: String,
         imgFile: File?
     ) {
+        val sharedPref = context.getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
+        val userId = sharedPref.getString("userID", "") ?: "" // Lấy user_id từ SharedPreferences
+
+        val userIdBody = RequestBody.create(MediaType.parse("text/plain"), userId)
+
         val productIdBody = RequestBody.create(MediaType.parse("text/plain"), productId.toString())
         val nameBody = RequestBody.create(MediaType.parse("text/plain"), name)
         val barcodeBody = RequestBody.create(MediaType.parse("text/plain"), barcode)
@@ -95,11 +100,11 @@ class ProductRepositoryImpl(private val context: Context): ProductRepository {
 
         val call = if (imagePart != null) {
             RetrofitClient.productApi.editProductToInvent(
-                productIdBody, nameBody, barcodeBody, descriptionBody, quantityBody, noteBody, imagePart
+                userIdBody, productIdBody, nameBody, barcodeBody, descriptionBody, quantityBody, noteBody, imagePart
             )
         } else {
             RetrofitClient.productApi.editProductToInventWithoutImage(
-                productIdBody, nameBody, barcodeBody, descriptionBody, quantityBody, noteBody
+                userId, productId, name, barcode, description, quantity, note
             )
         }
 
@@ -133,6 +138,47 @@ class ProductRepositoryImpl(private val context: Context): ProductRepository {
         })
     }
 
+    override fun editPublicProductToInvent(productId: Int, quantity: String, note: String) {
+
+        val sharedPref = context.getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
+        val userId = sharedPref.getString("userID", "") ?: "" // Lấy user_id từ SharedPreferences
+
+        val call = RetrofitClient.productApi.editPublicProductToInvent(
+            userId, productId, quantity, note)
+
+
+        call.enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                val responseBody = response.body()?.string()
+                val errorBody = response.errorBody()?.string()
+
+                Log.d("EditProduct", "Server Response: $responseBody")
+                Log.d("EditProduct", "Error Response: $errorBody")
+
+                try {
+                    val jsonResponse = JSONObject(responseBody ?: "{}")
+                    val message = jsonResponse.optString("message", "Có lỗi xảy ra")
+
+                    if (jsonResponse.optBoolean("success", false)) {
+                        _saveStatus.value = true
+                    } else {
+                        _saveStatus.value = false
+                        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+                    }
+                } catch (e: Exception) {
+                    Log.e("AddProduct", "Lỗi xử lý JSON: ${e.message}")
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                Log.e("AddProduct", "Request Failed: ${t.message}")
+                _saveStatus.value = false
+            }
+        })
+    }
+
+
+
 
     override fun getProducts() {
 
@@ -157,7 +203,8 @@ class ProductRepositoryImpl(private val context: Context): ProductRepository {
                                     img = item.getString("img"),
                                     description = item.getString("description"),
                                     quantity = item.getInt("quantity"),
-                                    note = item.getString("note")
+                                    note = item.getString("note"),
+                                    is_private = item.getInt("is_private")
                                 )
                                 productList.add(product)
                             }

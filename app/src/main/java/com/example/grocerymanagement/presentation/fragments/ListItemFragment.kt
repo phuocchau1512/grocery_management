@@ -15,6 +15,8 @@ import com.example.grocerymanagement.domain.model.Product
 import com.example.grocerymanagement.databinding.FragmentListItemBinding
 import com.example.grocerymanagement.presentation.adapter.OnItemClickListener
 import com.example.grocerymanagement.presentation.adapter.ProductAdapter
+import com.example.grocerymanagement.presentation.fragments.editFragment.EditItemFragment
+import com.example.grocerymanagement.presentation.fragments.editFragment.EditItemPublicFragment
 import com.example.grocerymanagement.presentation.viewModel.InventoryViewModel
 
 
@@ -105,20 +107,32 @@ class ListItemFragment : Fragment(), OnItemClickListener {
 
 
     override fun onItemClick(product: Product) {
-        val editFragment = EditItemFragment().apply {
-            arguments = Bundle().apply {
-                putParcelable("selected_product", product) // Truyền sản phẩm
-            }
-        }
 
-        // Chuyển sang EditItemFragment
-        parentFragmentManager.beginTransaction()
-            .replace(R.id.frameContainer, editFragment)
-            .addToBackStack(null)
-            .commit()
+        if (product.is_private != 0) {
+            // Nếu là sản phẩm private -> chuyển sang fragment khác (ví dụ: PrivateProductFragment)
+            val privateFragment = EditItemPublicFragment().apply {
+                arguments = Bundle().apply {
+                    putParcelable("selected_product", product)
+                }
+            }
+
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.frameContainer, privateFragment)
+                .addToBackStack(null)
+                .commit()
+        } else {
+            // Nếu không phải private -> chuyển sang EditItemFragment
+            val editFragment = EditItemFragment().apply {
+                arguments = Bundle().apply {
+                    putParcelable("selected_product", product)
+                }
+            }
+
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.frameContainer, editFragment)
+                .addToBackStack(null)
+                .commit()
+        }
     }
 
-
-
-
-}
+    }

@@ -1,4 +1,4 @@
-package com.example.grocerymanagement.presentation.fragments
+package com.example.grocerymanagement.presentation.fragments.editFragment
 
 import android.net.Uri
 import android.os.Bundle
@@ -57,7 +57,7 @@ class EditItemFragment : Fragment() {
 
         selectedProduct?.let { product ->
             binding.etProductName.setText(product.name)
-            binding.etBarcode.text = product.barcode
+            binding.etBarcode.setText(product.barcode)
             binding.etDescription.setText(product.description)
             binding.etSoLuong.setText(product.quantity.toString())
             binding.etNote.setText(product.note)

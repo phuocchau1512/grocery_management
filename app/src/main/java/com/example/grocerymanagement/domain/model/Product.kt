@@ -11,7 +11,8 @@ data class Product(
     val img: String, // Đường dẫn ảnh
     val description: String,
     val quantity: Int,
-    val note: String
+    val note: String,
+    val is_private: Int
 ):Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
@@ -20,8 +21,10 @@ data class Product(
         parcel.readString().toString(),
         parcel.readString().toString(),
         parcel.readInt(),
-        parcel.readString().toString()
-    )
+        parcel.readString().toString(),
+        parcel.readInt()
+    ) {
+    }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(id)
@@ -31,6 +34,7 @@ data class Product(
         parcel.writeString(description)
         parcel.writeInt(quantity)
         parcel.writeString(note)
+        parcel.writeInt(is_private)
     }
 
     override fun describeContents(): Int {

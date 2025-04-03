@@ -19,4 +19,8 @@ class ProductViewModel(application: Application) : AndroidViewModel(application)
         repository.editProductToInvent(productId, name, barcode, description, quantity , note, imgFile)
     }
 
+    fun editPublicProductToInvent(productId: Int, quantity:String, note:String) {
+        repository.editPublicProductToInvent(productId, quantity , note)
+    }
+
 }
