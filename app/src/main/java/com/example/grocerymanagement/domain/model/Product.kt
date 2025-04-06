@@ -49,5 +49,9 @@ data class Product(
         override fun newArray(size: Int): Array<Product?> {
             return arrayOfNulls(size)
         }
+
+        fun coverInfo(productInfo: ProductInfo): Product {
+            return Product(productInfo.id,productInfo.name,productInfo.barcode,productInfo.img,productInfo.description,1,"",productInfo.isPrivate)
+        }
     }
 }

@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.grocerymanagement.domain.model.Product
 import com.example.grocerymanagement.data.source.retrofit.RetrofitClient
+import com.example.grocerymanagement.domain.model.ProductInfo
 import com.example.grocerymanagement.domain.serviceInterface.ProductRepository
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -69,6 +70,46 @@ class ProductRepositoryImpl(private val context: Context): ProductRepository {
                     _saveStatus.value = false
                 }
             })
+    }
+
+    override fun addProductToInvent(productId: Int, quantity: String, note: String) {
+        val sharedPref = context.getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
+        val userId = sharedPref.getString("userID", "") ?: "" // Lấy user_id từ SharedPreferences
+
+        val call = userId.toIntOrNull()?.let {
+            RetrofitClient.productApi.addPublicProductToInvent(
+                it, productId, quantity, note)
+        }
+
+
+        call?.enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                val responseBody = response.body()?.string()
+                val errorBody = response.errorBody()?.string()
+
+                Log.d("EditProduct", "Server Response: $responseBody")
+                Log.d("EditProduct", "Error Response: $errorBody")
+
+                try {
+                    val jsonResponse = JSONObject(responseBody ?: "{}")
+                    val message = jsonResponse.optString("message", "Có lỗi xảy ra")
+
+                    if (jsonResponse.optBoolean("success", false)) {
+                        _saveStatus.value = true
+                    } else {
+                        _saveStatus.value = false
+                        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+                    }
+                } catch (e: Exception) {
+                    Log.e("AddProduct", "Lỗi xử lý JSON: ${e.message}")
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                Log.e("AddProduct", "Request Failed: ${t.message}")
+                _saveStatus.value = false
+            }
+        })
     }
 
     override fun editProductToInvent(
@@ -177,7 +218,50 @@ class ProductRepositoryImpl(private val context: Context): ProductRepository {
         })
     }
 
+    override fun getProductFromServer(barcode: String): LiveData<ProductInfo?> {
+        val result = MutableLiveData<ProductInfo?>()
 
+        RetrofitClient.productApi.getInfoProduct(barcode)
+            .enqueue(object : Callback<ResponseBody> {
+                override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                    if (response.isSuccessful) {
+                        val jsonResponse = JSONObject(response.body()?.string() ?: "{}")
+                        val productInfo = parseProductInfoFromJson(jsonResponse)
+                        result.postValue(productInfo)  // Trả kết quả về
+                    } else {
+                        result.postValue(null) // Trả về null khi không tìm thấy sản phẩm
+                    }
+                }
+
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    result.postValue(null) // Trả về null khi thất bại
+                    Log.e("API_ERROR", "Error: ${t.message}")
+                }
+            })
+        return result
+    }
+
+    // Phân tích dữ liệu JSON trả về từ server thành đối tượng Product
+    private fun parseProductInfoFromJson(jsonResponse: JSONObject): ProductInfo? {
+        return try {
+            if (jsonResponse.getBoolean("success")) {
+                val item = jsonResponse.getJSONObject("product")
+                ProductInfo(
+                    id = item.getInt("id"),
+                    name = item.getString("name"),
+                    barcode = item.getString("barcode"),
+                    img = item.getString("img"),
+                    description = item.getString("description"),
+                    isPrivate = item.getInt("is_private")
+                )
+            } else {
+                null
+            }
+        } catch (e: Exception) {
+            Log.e("ProductParseError", "Error parsing product data: ${e.message}")
+            null
+        }
+    }
 
 
     override fun getProducts() {

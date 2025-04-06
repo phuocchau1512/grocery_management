@@ -15,7 +15,7 @@ import retrofit2.http.Query
 interface ProductApi {
 
     @Multipart
-    @POST("products/save_product.php")
+    @POST("products/save_private_product.php")
     fun addProductToInvent(
         @Part("user_id") userId: RequestBody,
         @Part("name") name: RequestBody,
@@ -24,6 +24,15 @@ interface ProductApi {
         @Part("quantity") quantity: RequestBody,
         @Part("note") note: RequestBody,
         @Part img: MultipartBody.Part
+    ): Call<ResponseBody>
+
+    @FormUrlEncoded
+    @POST("products/save_product.php")
+    fun addPublicProductToInvent(
+        @Field("user_id") userId: Int,
+        @Field("product_id") productId: Int,
+        @Field("quantity") quantity: String,
+        @Field("note") note: String?
     ): Call<ResponseBody>
 
     @Multipart
@@ -52,7 +61,7 @@ interface ProductApi {
     ): Call<ResponseBody>
 
     @FormUrlEncoded
-    @POST("products/edit_product_without_image.php")
+    @POST("products/edit_public_product.php")
     fun editPublicProductToInvent(
         @Field("user_id") userId: String,
         @Field("product_id") productId: Int,
@@ -66,8 +75,8 @@ interface ProductApi {
         @Query("user_id") userId: String
     ): Call<ResponseBody>
 
-    @GET("products/get_info_products.php")
-    fun getInfoProducts(
+    @GET("products/get_info_product.php")
+    fun getInfoProduct(
         @Query("barcode") barcode: String
     ): Call<ResponseBody>
 

@@ -15,6 +15,10 @@ class ProductViewModel(application: Application) : AndroidViewModel(application)
         repository.addProductToInvent(name, barcode, description, quantity , note, imgFile)
     }
 
+    fun addProductToInvent(productId: Int, quantity:String, note:String) {
+        repository.addProductToInvent(productId,quantity , note)
+    }
+
     fun editProductToInvent(productId: Int, name: String, barcode: String, description: String, quantity:String, note:String, imgFile: File?) {
         repository.editProductToInvent(productId, name, barcode, description, quantity , note, imgFile)
     }

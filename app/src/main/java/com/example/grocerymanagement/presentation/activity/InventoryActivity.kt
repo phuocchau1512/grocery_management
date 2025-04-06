@@ -11,26 +11,54 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.grocerymanagement.R
 import com.example.grocerymanagement.databinding.ActivityInventoryBinding
-import com.example.grocerymanagement.presentation.fragments.AddItemFragment
+import com.example.grocerymanagement.domain.model.Product
 import com.example.grocerymanagement.presentation.fragments.ListItemFragment
+import com.example.grocerymanagement.presentation.fragments.addFragment.AddItemFragment
+import com.example.grocerymanagement.presentation.fragments.addFragment.AddItemPublicFragment
+import com.example.grocerymanagement.presentation.viewModel.InventoryViewModel
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanOptions
 
 class InventoryActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityInventoryBinding
+    private lateinit var viewModel: InventoryViewModel  // Khai báo ViewModel
 
     private val scanLauncher = registerForActivityResult(ScanContract()) { result ->
-        result.contents?.let {
-            AlertDialog.Builder(this)
-                .setTitle("Kết quả")
-                .setMessage(it)
-                .setPositiveButton("OK") { dialog, _ -> dialog.dismiss() }
-                .show()
+        result.contents?.let { barcode ->
+            val currentList = viewModel.product.value ?: emptyList()
+            val matchedProduct = currentList.find { it.barcode == barcode }
+
+            if (matchedProduct != null) {
+                AlertDialog.Builder(this)
+                    .setTitle("Đã có trong kho")
+                    .setMessage("Tên: ${matchedProduct.name}\nTồn kho: ${matchedProduct.quantity}")
+                    .setPositiveButton("OK") { dialog, _ -> dialog.dismiss() }
+                    .show()
+            } else {
+                viewModel.getProductFromServer(barcode).observe(this) { serverProduct ->
+                    if (serverProduct != null) {
+                        val fragment = AddItemPublicFragment().apply {
+                            arguments = Bundle().apply {
+                                putParcelable("selected_product", Product.coverInfo(serverProduct))
+                            }
+                        }
+                        replaceFragment(fragment)
+                    } else {
+                        AlertDialog.Builder(this)
+                            .setTitle("Thông báo")
+                            .setMessage("Sản phảm không tồn tại vui lòng tự thêm thủ công! $barcode ")
+                            .setPositiveButton("OK") { dialog, _ -> dialog.dismiss() }
+                            .show()
+                    }
+                }
+            }
         } ?: Toast.makeText(this, "Không có dữ liệu!", Toast.LENGTH_SHORT).show()
     }
+
 
     private val requestCameraPermission = registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
         if (granted) {
@@ -45,6 +73,9 @@ class InventoryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityInventoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        viewModel = ViewModelProvider(this)[InventoryViewModel::class.java]
+
 
         setSupportActionBar(binding.appBar.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

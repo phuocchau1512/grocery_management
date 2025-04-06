@@ -28,7 +28,11 @@
             android:layout_height="wrap_content"
             android:text="@string/product_name"
             android:textSize="24sp"
-            android:textStyle="bold" />
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:maxLines="1"
+            android:ellipsize="end" />
+
 
         <TextView
             android:id="@+id/txtBarcode"

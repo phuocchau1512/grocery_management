@@ -53,5 +53,6 @@
     <string name="nhap_ghi_chu">Nhập ghi chú cho sản phẩm</string>
     <string name="note">Ghi chú: %s</string>
     <string name="edit_product">Chỉnh sửa sản phẩm</string>
+    <string name="themSpmoi">Thêm Sản Phẩm mới</string>
 
 </resources>

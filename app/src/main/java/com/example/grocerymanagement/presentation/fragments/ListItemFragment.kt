@@ -19,120 +19,96 @@ import com.example.grocerymanagement.presentation.fragments.editFragment.EditIte
 import com.example.grocerymanagement.presentation.fragments.editFragment.EditItemPublicFragment
 import com.example.grocerymanagement.presentation.viewModel.InventoryViewModel
 
-
 class ListItemFragment : Fragment(), OnItemClickListener {
 
     private var _binding: FragmentListItemBinding? = null
     private val binding get() = _binding!!
-    private lateinit var viewModel: InventoryViewModel  // Khai báo ViewModel
+    private lateinit var viewModel: InventoryViewModel
     private lateinit var adapter: ProductAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         _binding = FragmentListItemBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this)[InventoryViewModel::class.java]
-        // Khởi tạo Adapter
-        adapter = ProductAdapter(emptyList(),this)
+        viewModel = ViewModelProvider(requireActivity())[InventoryViewModel::class.java]
+        adapter = ProductAdapter(emptyList(), this)
 
         settingSwipeDelete()
 
-        // Cấu hình RecyclerView
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.adapter = adapter
 
-        // Quan sát dữ liệu từ ViewModel
         viewModel.product.observe(viewLifecycleOwner) { productList ->
             binding.progressBar.visibility = View.GONE
-            if ( productList.isNullOrEmpty() ){
+            if (productList.isNullOrEmpty()) {
                 binding.recyclerView.visibility = View.GONE
                 binding.tvEmpty.visibility = View.VISIBLE
-            }
-            else {
+            } else {
                 binding.recyclerView.visibility = View.VISIBLE
                 binding.tvEmpty.visibility = View.GONE
-                adapter.updateData(productList)
             }
+            adapter.updateData(productList)
         }
 
-        // Gọi hàm để lấy dữ liệu sản phẩm
         viewModel.getProductInInvent()
     }
 
-    private fun settingSwipeDelete(){
-
+    private fun settingSwipeDelete() {
         val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
-            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
-                return false
-            }
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean = false
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
-                val productToDelete = adapter.getProductAt(position) // Lấy sản phẩm cần xóa
+                val productToDelete = adapter.getProductAt(position)
 
                 AlertDialog.Builder(requireContext())
                     .setTitle("Xác nhận xóa")
                     .setMessage("Bạn có chắc muốn xóa sản phẩm này?")
                     .setPositiveButton("Xóa") { _, _ ->
-                        viewModel.deleteProductInInvent(productToDelete.id.toString()) // Gọi API xóa
+                        viewModel.deleteProductInInvent(productToDelete.id.toString())
+                        viewModel.getProductInInvent() // Cập nhật lại danh sách
+                        adapter.notifyDataSetChanged()
                     }
                     .setNegativeButton("Hủy") { dialog, _ ->
                         dialog.dismiss()
-                        adapter.notifyItemChanged(position) // Khôi phục item nếu hủy
+                        adapter.notifyDataSetChanged() // Khôi phục lại hiển thị
                     }
                     .show()
-
             }
         })
 
-        // Gắn vào RecyclerView
         itemTouchHelper.attachToRecyclerView(binding.recyclerView)
-
     }
 
+    override fun onItemClick(product: Product) {
+        val fragment = if (product.is_private == 0) {
+            EditItemPublicFragment()
+        } else {
+            EditItemFragment()
+        }
 
+        fragment.arguments = Bundle().apply {
+            putParcelable("selected_product", product)
+        }
+
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.frameContainer, fragment)
+            .addToBackStack(null)
+            .commit()
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
-
-
-    override fun onItemClick(product: Product) {
-
-        if (product.is_private != 0) {
-            // Nếu là sản phẩm private -> chuyển sang fragment khác (ví dụ: PrivateProductFragment)
-            val privateFragment = EditItemPublicFragment().apply {
-                arguments = Bundle().apply {
-                    putParcelable("selected_product", product)
-                }
-            }
-
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.frameContainer, privateFragment)
-                .addToBackStack(null)
-                .commit()
-        } else {
-            // Nếu không phải private -> chuyển sang EditItemFragment
-            val editFragment = EditItemFragment().apply {
-                arguments = Bundle().apply {
-                    putParcelable("selected_product", product)
-                }
-            }
-
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.frameContainer, editFragment)
-                .addToBackStack(null)
-                .commit()
-        }
-    }
-
-    }
+}

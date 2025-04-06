@@ -1,4 +1,4 @@
-package com.example.grocerymanagement.presentation.fragments
+package com.example.grocerymanagement.presentation.fragments.addFragment
 
 import android.net.Uri
 import android.os.Bundle
