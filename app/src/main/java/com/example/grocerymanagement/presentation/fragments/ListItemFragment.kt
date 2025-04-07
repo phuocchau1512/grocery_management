@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.grocerymanagement.R
 import com.example.grocerymanagement.domain.model.Product
 import com.example.grocerymanagement.databinding.FragmentListItemBinding
+import com.example.grocerymanagement.presentation.adapter.ItemSpacingDecoration
 import com.example.grocerymanagement.presentation.adapter.OnItemClickListener
 import com.example.grocerymanagement.presentation.adapter.ProductAdapter
 import com.example.grocerymanagement.presentation.fragments.editFragment.EditItemFragment
@@ -43,6 +44,7 @@ class ListItemFragment : Fragment(), OnItemClickListener {
 
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.adapter = adapter
+        binding.recyclerView.addItemDecoration(ItemSpacingDecoration(24))
 
         viewModel.product.observe(viewLifecycleOwner) { productList ->
             binding.progressBar.visibility = View.GONE

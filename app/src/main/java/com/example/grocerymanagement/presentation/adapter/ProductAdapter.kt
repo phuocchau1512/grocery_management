@@ -1,6 +1,8 @@
 package com.example.grocerymanagement.presentation.adapter
 
+import android.graphics.Rect
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -91,5 +93,21 @@ class ProductDiffCallback(
 interface OnItemClickListener {
     fun onItemClick(product: Product)
 }
+
+
+
+class ItemSpacingDecoration(private val verticalSpaceHeight: Int) : RecyclerView.ItemDecoration() {
+    override fun getItemOffsets(
+        outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State
+    ) {
+        super.getItemOffsets(outRect, view, parent, state)
+
+        // Thêm khoảng cách dưới cho mọi item, trừ item cuối
+        if (parent.getChildAdapterPosition(view) != parent.adapter?.itemCount?.minus(1)) {
+            outRect.bottom = verticalSpaceHeight
+        }
+    }
+}
+
 
 

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:radius="12dp"
+    android:elevation="6dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Dòng trên cùng gồm tên và icon yêu thích -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txtListName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Danh sách mua sắm"
+                android:textColor="#2E2E2E"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/imgFavorite"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginEnd="8dp" />
+
+            <ImageView
+                android:id="@+id/imgFavorite"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/baseline_favorite_border_24"
+                android:contentDescription="Yêu thích"
+                app:tint="#FF4081"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Thông tin phụ -->
+        <TextView
+            android:id="@+id/txtItemCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Số mặt hàng: 10"
+            android:textColor="#757575"
+            android:textSize="14sp"
+            android:layout_marginTop="10dp" />
+
+        <TextView
+            android:id="@+id/txtDateCreated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ngày tạo: 2025-04-07"
+            android:textColor="#9E9E9E"
+            android:textSize="13sp"
+            android:layout_marginTop="2dp" />
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

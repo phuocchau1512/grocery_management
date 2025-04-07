@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 object RetrofitClient {
 
     // sửa địa chỉ ip hiện tại của máy
-    private const val BASE_URL = "http://192.168.1.22/api_grocery/"
+    private const val BASE_URL = "http://192.168.1.33/api_grocery/"
 
     fun getBaseUrl(): String { return BASE_URL}
 
