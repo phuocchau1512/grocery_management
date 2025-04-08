@@ -11,10 +11,11 @@ import com.example.grocerymanagement.R
 import com.example.grocerymanagement.domain.model.Product
 import com.example.grocerymanagement.data.source.retrofit.RetrofitClient
 import com.example.grocerymanagement.databinding.ItemProductBinding
+import com.example.grocerymanagement.presentation.fragments.ListItemFragment
 
 class ProductAdapter(
     private var productList: List<Product>,
-    private val listener: OnItemClickListener
+    private val listener: ListItemFragment
 ) : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
     class ProductViewHolder(val binding: ItemProductBinding) : RecyclerView.ViewHolder(binding.root)

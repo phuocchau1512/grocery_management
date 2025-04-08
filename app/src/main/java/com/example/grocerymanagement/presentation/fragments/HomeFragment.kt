@@ -13,6 +13,7 @@ import com.example.grocerymanagement.R
 import com.example.grocerymanagement.databinding.FragmentHomeBinding
 import com.example.grocerymanagement.presentation.adapter.adapterItem.MenuItem
 import com.example.grocerymanagement.presentation.activity.InventoryActivity
+import com.example.grocerymanagement.presentation.activity.ShoppingActivity
 import com.example.grocerymanagement.presentation.adapter.MenuAdapter
 
 
@@ -71,7 +72,8 @@ class HomeFragment : Fragment() {
                     startActivity(intent)
                 }
                 "Danh sách mua sắm" -> {
-
+                    val intent = Intent(requireContext(), ShoppingActivity::class.java)
+                    startActivity(intent)
                 }
                 "Quản lý công thức" -> {
 
