@@ -5,10 +5,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.grocerymanagement.databinding.ItemShoppingListBinding
-import com.example.grocerymanagement.presentation.adapter.adapterItem.ShoppingList
+import com.example.grocerymanagement.domain.model.ShoppingListItem
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class ShoppingListAdapter(
-    private var list: List<ShoppingList>,
+    private var list: List<ShoppingListItem>,
     private val listener: OnShoppingListClickListener
 ) : RecyclerView.Adapter<ShoppingListAdapter.ShoppingListViewHolder>() {
 
@@ -21,31 +23,59 @@ class ShoppingListAdapter(
 
     override fun onBindViewHolder(holder: ShoppingListViewHolder, position: Int) {
         val shoppingList = list[position]
-        holder.binding.txtListName.text = shoppingList.name
-        holder.binding.txtDateCreated.text = "Ngày tạo: ${shoppingList.dateCreated}"
-        holder.binding.txtItemCount.text = "Số mặt hàng: ${shoppingList.itemCount}"
+        with(holder.binding) {
+            txtListName.text = shoppingList.name
 
-        // Click item
-        holder.itemView.setOnClickListener {
-            listener.onListClick(list[holder.adapterPosition])
+            val inputFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+            val outputFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            val date = inputFormat.parse(shoppingList.createdAt)
+            txtDateCreated.text = date?.let { outputFormat.format(it) }
+            txtItemCount.text = shoppingList.itemCount.toString()
+
+            // Set icon trái tim theo trạng thái
+            val favoriteIcon = if (shoppingList.isFavorite == 1) {
+                com.example.grocerymanagement.R.drawable.baseline_favorite_24
+            } else {
+                com.example.grocerymanagement.R.drawable.baseline_favorite_border_24
+            }
+            imgFavorite.setImageResource(favoriteIcon)
+
+            // Xử lý click icon trái tim
+            imgFavorite.setOnClickListener {
+                listener.onFavoriteClick(shoppingList)
+            }
+
+            // Click toàn item
+            root.setOnClickListener {
+                listener.onListClick(shoppingList)
+            }
         }
     }
 
+
     override fun getItemCount(): Int = list.size
 
-    fun updateData(newList: List<ShoppingList>) {
+    fun updateData(newList: List<ShoppingListItem>) {
         val diffCallback = ShoppingListDiffCallback(list, newList)
         val diffResult = DiffUtil.calculateDiff(diffCallback)
         list = newList
         diffResult.dispatchUpdatesTo(this)
     }
 
-    fun getListAt(position: Int): ShoppingList = list[position]
+    fun getListAt(position: Int): ShoppingListItem = list[position]
+    fun getCurrentList():List<ShoppingListItem> = list
+
+    fun removeItem(position: Int) {
+        val mutableList = list.toMutableList() // Chuyển sang MutableList để có thể xóa
+        mutableList.removeAt(position)
+        list = mutableList
+        notifyItemRemoved(position)
+    }
 }
 
 class ShoppingListDiffCallback(
-    private val oldList: List<ShoppingList>,
-    private val newList: List<ShoppingList>
+    private val oldList: List<ShoppingListItem>,
+    private val newList: List<ShoppingListItem>
 ) : DiffUtil.Callback() {
 
     override fun getOldListSize(): Int = oldList.size
@@ -62,5 +92,6 @@ class ShoppingListDiffCallback(
 }
 
 interface OnShoppingListClickListener {
-    fun onListClick(list: ShoppingList)
+    fun onListClick(list: ShoppingListItem)
+    fun onFavoriteClick(list: ShoppingListItem) // thêm dòng này
 }

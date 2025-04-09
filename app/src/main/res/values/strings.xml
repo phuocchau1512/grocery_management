@@ -61,5 +61,6 @@
     <string name="add">Thêm</string>
     <string name="taoDsmoi">Tạo danh sach mới</string>
     <string name="hint_ds_moi">Nhập tên danh sách mới</string>
+    <string name="nh_d_u_mua">Đánh dấu đã mua</string>
 
 </resources>

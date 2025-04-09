@@ -1,13 +1,28 @@
-package com.example.grocerymanagement.presentation.fragments
+package com.example.grocerymanagement.presentation.fragments.listFragment
 
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.grocerymanagement.R
+import com.example.grocerymanagement.domain.model.Product
+import com.example.grocerymanagement.databinding.FragmentListItemBinding
+import com.example.grocerymanagement.presentation.adapter.ItemSpacingDecoration
+import com.example.grocerymanagement.presentation.adapter.OnItemClickListener
+import com.example.grocerymanagement.presentation.adapter.ProductAdapter
+import com.example.grocerymanagement.presentation.fragments.editFragment.EditItemFragment
+import com.example.grocerymanagement.presentation.fragments.editFragment.EditItemPublicFragment
+import com.example.grocerymanagement.presentation.viewModel.InventoryViewModel
 
+class ListItemFragment : Fragment(), OnItemClickListener {
 
-class ListShoppingFragment : Fragment() {
-
-
-
-    /*private var _binding: FragmentListShoppingBinding? = null
+    private var _binding: FragmentListItemBinding? = null
     private val binding get() = _binding!!
     private lateinit var viewModel: InventoryViewModel
     private lateinit var adapter: ProductAdapter
@@ -16,7 +31,7 @@ class ListShoppingFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentListShoppingBinding.inflate(inflater, container, false)
+        _binding = FragmentListItemBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -64,6 +79,7 @@ class ListShoppingFragment : Fragment() {
                     .setPositiveButton("Xóa") { _, _ ->
                         viewModel.deleteProductInInvent(productToDelete.id.toString())
                         viewModel.getProductInInvent() // Cập nhật lại danh sách
+                        adapter.removeItem(position)
                         adapter.notifyDataSetChanged()
                     }
                     .setNegativeButton("Hủy") { dialog, _ ->
@@ -77,7 +93,7 @@ class ListShoppingFragment : Fragment() {
         itemTouchHelper.attachToRecyclerView(binding.recyclerView)
     }
 
-    fun onItemClick(product: Product) {
+    override fun onItemClick(product: Product) {
         val fragment = if (product.is_private == 0) {
             EditItemPublicFragment()
         } else {
@@ -97,6 +113,5 @@ class ListShoppingFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }*/
-
+    }
 }

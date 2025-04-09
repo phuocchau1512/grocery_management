@@ -15,7 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.grocerymanagement.R
 import com.example.grocerymanagement.databinding.ActivityInventoryBinding
 import com.example.grocerymanagement.domain.model.Product
-import com.example.grocerymanagement.presentation.fragments.ListItemFragment
+import com.example.grocerymanagement.presentation.fragments.listFragment.ListItemFragment
 import com.example.grocerymanagement.presentation.fragments.addFragment.AddItemFragment
 import com.example.grocerymanagement.presentation.fragments.addFragment.AddItemPublicFragment
 import com.example.grocerymanagement.presentation.viewModel.InventoryViewModel
@@ -79,6 +79,7 @@ class InventoryActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.appBar.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.baseline_arrow_back_24)
 
         // Xử lý nút Back trên Toolbar

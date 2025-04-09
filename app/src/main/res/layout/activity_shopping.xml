@@ -20,6 +20,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
+
+
         <!-- Nội dung chính -->
         <FrameLayout
             android:id="@+id/frameContainer"
