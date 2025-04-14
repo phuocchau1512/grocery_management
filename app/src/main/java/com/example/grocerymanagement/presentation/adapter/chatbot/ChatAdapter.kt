@@ -8,11 +8,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.grocerymanagement.R
 import io.noties.markwon.Markwon
 
+
+
 class ChatAdapter(
     private val messages: MutableList<Message>,
-    private val markwon: Markwon //
+    private val markwon: Markwon
 ) : RecyclerView.Adapter<ChatAdapter.MessageViewHolder>() {
-
 
     override fun getItemViewType(position: Int): Int {
         return if (messages[position].isUser) VIEW_TYPE_USER else VIEW_TYPE_SERVER
@@ -25,15 +26,22 @@ class ChatAdapter(
         } else {
             layoutInflater.inflate(R.layout.item_message_server, parent, false)
         }
-        return MessageViewHolder(view)
+        return MessageViewHolder(view, viewType)
     }
 
     override fun onBindViewHolder(holder: MessageViewHolder, position: Int) {
         val message = messages[position]
-        if (!message.isUser) {
-            markwon.setMarkdown(holder.textViewMessage, message.text)
-        } else {
+        if (message.isUser) {
             holder.textViewMessage.text = message.text
+        } else {
+            if (message.isLoading) {
+                holder.loadingIndicator?.visibility = View.VISIBLE
+                holder.textViewMessage.visibility = View.GONE
+            } else {
+                holder.loadingIndicator?.visibility = View.GONE
+                holder.textViewMessage.visibility = View.VISIBLE
+                markwon.setMarkdown(holder.textViewMessage, message.text)
+            }
         }
     }
 
@@ -45,8 +53,10 @@ class ChatAdapter(
         notifyDataSetChanged()
     }
 
-    class MessageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class MessageViewHolder(itemView: View, viewType: Int) : RecyclerView.ViewHolder(itemView) {
         val textViewMessage: TextView = itemView.findViewById(R.id.textViewMessage)
+        val loadingIndicator: View? =
+            if (viewType == VIEW_TYPE_SERVER) itemView.findViewById(R.id.loadingIndicator) else null
     }
 
     companion object {

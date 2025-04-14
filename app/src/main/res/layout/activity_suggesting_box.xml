@@ -8,6 +8,27 @@
     android:padding="16dp"
     tools:context="presentation.activity.SuggestingChatActivity">
 
+    <TextView
+        android:id="@+id/emptyPlaceholder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Bạn cần gợi ý điều gì?"
+        android:gravity="center"
+        android:textColor="#888888"
+        android:textSize="16sp"
+        android:visibility="gone"
+        android:layout_marginTop="16dp"/>
+    <TextView
+        android:id="@+id/textViewPlaceholder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Bạn cần gợi ý điều gì?"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        android:padding="8dp"
+        android:visibility="gone"
+        android:textColor="#888888" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewChat"
         android:layout_width="match_parent"
