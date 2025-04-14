@@ -14,20 +14,24 @@ class SuggestingChatViewModel : ViewModel() {
     fun sendPrompt(prompt: String) {
         val currentMessages = _messages.value?.toMutableList() ?: mutableListOf()
         currentMessages.add(Message(prompt, isUser = true))
+        currentMessages.add(Message("Đang xử lý...", isUser = false, isLoading = true)) // Thêm tin nhắn loading
         _messages.value = currentMessages
 
         PromptSender.send(prompt, object : PromptSender.PromptCallback {
             override fun onSuccess(responseText: String) {
                 val updatedMessages = _messages.value?.toMutableList() ?: mutableListOf()
+                updatedMessages.removeLast() // Xóa loading
                 updatedMessages.add(Message(responseText, isUser = false))
                 _messages.postValue(updatedMessages)
             }
 
             override fun onError(errorMessage: String) {
                 val updatedMessages = _messages.value?.toMutableList() ?: mutableListOf()
-                updatedMessages.add(Message(errorMessage, isUser = false))
+                updatedMessages.removeLast() // Xóa loading
+                updatedMessages.add(Message("Đã xảy ra lỗi: $errorMessage", isUser = false))
                 _messages.postValue(updatedMessages)
             }
         })
     }
+
 }
