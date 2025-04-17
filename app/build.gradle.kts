@@ -67,7 +67,11 @@ dependencies {
     implementation(libs.androidx.activity.v172)
     implementation(libs.androidx.appcompat.v161)
     implementation(libs.glide)
-
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+    implementation("io.noties.markwon:core:4.6.2")
+    implementation("io.noties.markwon:html:4.6.2") // Nếu bạn muốn hỗ trợ thẻ HTML cơ bản trong Markdown
+    implementation("com.google.code.gson:gson:2.9.0") // Nếu bạn cần xử lý JSON phức tạp hơn
+    implementation("androidx.recyclerview:recyclerview:1.3.2")
 
 
 
