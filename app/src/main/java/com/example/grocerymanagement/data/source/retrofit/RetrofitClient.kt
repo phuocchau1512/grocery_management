@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 object RetrofitClient {
 
     // sửa địa chỉ ip hiện tại của máy
-    private const val BASE_URL = "http://10.0.2.2/api_grocery/"
+    private const val BASE_URL = "http://10.0.2.2/api_grocery/" //from emulator connecting to localhost -duy-
 
     fun getBaseUrl(): String { return BASE_URL}
 
